@@ -22,35 +22,77 @@ a:hover {
     background: #272822;
     color: #66d9ef;
     z-index: 100;
+    overflow: visible;
+}
+
+#login-container {
+    background: inherit;
+    position: absolute;
+    top: 3vh;
+    right: 0;
+    height: 0;
+    z-index: 2;
+    overflow: hidden;
+    transition: height .3s, box-shadow .7s;
+}
+
+#login-container p {
+    display:inline;
+    color: #75715e;
+}
+
+#login-container form {
+    float: right;
+    padding: .4em .5em;
+}
+
+#login-container input {
+    padding: .3em;
+    margin: .3em 0;
+    border-radius: .5em;
+}
+
+#confirm-pass {
+    display: none;
+}
+
+.big-title {
+    height: 4.5vh !important;
+    box-shadow: 0 0 2em #111;
+}
+
+#menu-container {
+    width: 100%;
+    height: 3vh;
     overflow: hidden;
 }
 
 #output-grad {
-    position: absolute;
-    top: 3vh;
     width: 100%;
     height: 3vh;
+    position: relative;
+    margin-bottom: -3vh;
     background: linear-gradient(#111, rgba(0, 0, 0, 0));
     z-index: 1;
 }
 
-#title-container a, #title-container div {
+#menu-container a, #menu-container div {
     padding: .4em 1em;
     display: inline-block;
     height: inherit;
 }
 
-#title-container .menu-option {
+#menu-container .menu-option {
     float: right;
     color: #f92672;
 }
 
-#title-container .menu-text {
+#menu-container .menu-text {
     float: right;
     color: #75715e;
 }
 
-#title-container .spacer {
+#menu-container .spacer {
     float: right;
     width: 0vw;
     padding: .2em;
@@ -58,7 +100,7 @@ a:hover {
     background: rgba(255, 255, 255, .1);
 }
 
-#title-container .menu-option:hover {
+#menu-container .menu-option:hover {
     color: #FFF;
     background: rgba(255, 255, 255, .2);
 }

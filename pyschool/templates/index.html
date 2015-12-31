@@ -12,20 +12,30 @@
 {% endblock head %}
 {% block body %}
     <div id="title-container">
-        <div># PySchool</div>
-        {% if loggedIn %}
-        <a href="logout" class="menu-option">Logout</a>
-        <div class="menu-text">{{ request.user }}</div>
-        <div class="spacer"></div>
-        <a href="#" id="submit" class="menu-option">Submit Solution</a>
-        <a href="#" id="test" class="menu-option">Test Solution</a>
-        <a href="#" id="get-challenge" class="menu-option">Get Challenge</a>
-        {% else %}
-        <a href="#" class="menu-option">Login</a>
-        {% endif %}
-        <div class="spacer"></div>
-        <a href="#" id="clear-output" class="menu-option">Clear Output</a>
-        <a href="#" id="run-code" class="menu-option">Run Code</a>
+        <div id="menu-container">
+            <div># PySchool</div>
+            {% if loggedIn %}
+            <a href="logout" class="menu-option">Logout</a>
+            <div class="menu-text">{{ request.user }}</div>
+            <div class="spacer"></div>
+            <a href="#" id="submit" class="menu-option">Submit Solution</a>
+            <a href="#" id="test" class="menu-option">Test Solution</a>
+            <a href="#" id="get-challenge" class="menu-option">Get Challenge</a>
+            {% else %}
+            <a href="#" id="login-button" class="menu-option">Login</a>
+            {% endif %}
+            <div class="spacer"></div>
+            <a href="#" id="clear-output" class="menu-option">Clear Output</a>
+            <a href="#" id="run-code" class="menu-option">Run Code</a>
+        </div>
+        <div id="login-container">
+            <form id="login-form">
+                <p>Please log in (or <a href="#" id="reg-button">register</a>)</p>
+                <input type="text" placeholder="username">
+                <input type="password" placeholder="password">
+                <input type="password" placeholder="confirm password" id="confirm-pass">
+            </form>
+        </div>
     </div>
     <div id="output-grad"></div>
     <div id="output-container" class="text">

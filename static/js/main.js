@@ -1,3 +1,5 @@
+var regMode = false;
+
 $(document).ready(function () {
   $.djangocsrf( "enable" );
 
@@ -17,6 +19,26 @@ $(document).ready(function () {
 
   $("#input-toggle").click(togglePaneSize);
 
+  $("#login-button").click(function () {
+    $("#login-container").toggleClass("big-title");
+  });
+
+  $("#reg-button").click(toggleReg);
+
+  function toggleReg() {
+    regMode = !regMode;
+
+    if (regMode) {
+      $("#confirm-pass").show();
+      $("#login-form p").html('Please register (or <a href="#" id="reg-button">log in</a>)');
+      $("#reg-button").click(toggleReg);
+    } else {
+      $("#confirm-pass").hide();
+      $("#login-form p").html('Please log in (or <a href="#" id="reg-button">register</a>)');
+      $("#reg-button").click(toggleReg);
+    }
+  }
+
   function builtinRead(x) {
     if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
       throw "File not found: '" + x + "'";
@@ -24,7 +46,6 @@ $(document).ready(function () {
   }
 
   function runCode(editor) {
-    console.log(editor);
     Sk.configure({output: outf, read: builtinRead});
     Sk.pre = "output-box";
     try {
