@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block body %}
+<div id="login-container">
+    {% if form.errors %}
+        <h4 style="color:red">Your username and password didn't match. Please try again.</h4>
+    {% endif %}
+    <h3>Please login.</h3>
+    <form id="login_form" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        <div>
+            {% csrf_token %}
+            {{form.username.label_tag}}
+        </div>
+        <div>
+            {{form.username}}
+        </div>
+        <div>
+            {{form.password.label_tag}}
+        </div>
+        <div>
+            {{form.password}}
+            <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+    </form>
+    <form id="reg_form" action="../register/"></form>
+    <input form="login_form" type="submit" value="Login">
+    <input form="reg_form" type="submit" value="Register">
+</div>
+{% endblock body %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "lib/codemirror.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/monokai.css" %}">
+    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js"></script>
+    <script src="{% static "lib/jquery.djangocsrf.js" %}" type="text/javascript"></script>
+    <script src="{% static "lib/codemirror.js" %}" type="text/javascript"></script>
+    <script src="{% static "lib/python.js" %}" type="text/javascript"></script>
+    <script src="{% static "lib/skulpt.min.js" %}" type="text/javascript"></script>
+{% endblock head %}
+{% block body %}
+    <div id="title-container">
+        <div># PySchool</div>
+        {% if loggedIn %}
+        <a href="logout" class="menu-option">Logout</a>
+        <div class="menu-text">{{ request.user }}</div>
+        <div class="spacer"></div>
+        <a href="#" id="submit" class="menu-option">Submit Solution</a>
+        <a href="#" id="test" class="menu-option">Test Solution</a>
+        <a href="#" id="get-challenge" class="menu-option">Get Challenge</a>
+        {% else %}
+        <a href="#" class="menu-option">Login</a>
+        {% endif %}
+        <div class="spacer"></div>
+        <a href="#" id="clear-output" class="menu-option">Clear Output</a>
+        <a href="#" id="run-code" class="menu-option">Run Code</a>
+    </div>
+    <div id="output-grad"></div>
+    <div id="output-container" class="text">
+        <div id="output-box"></div>
+    </div>
+    <div id="input-container" class="text text-mini">
+        <div id="input-toggle">|||||</div>
+        <textarea id="cm-ta">print 'Hello world!'</textarea>
+    </div>
+    <div id='footer'>Made with <a href="http://www.skulpt.org">Skulpt</a> and <a href="http://www.codemirror.net">CodeMirror</a>. Released under <a href=".">A License</a>. (c) 2015</div>
+    <script type="text/javascript">
+        window.user = "{{ request.user }}";
+    </script>
+    <script src="{% static "js/main.js" %}" type="text/javascript"></script>
+{% endblock body %}

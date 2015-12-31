@@ -1,0 +1,5 @@
+db.sqlite3
+*.swp
+staticfiles/
+*.pyc
+pyschool/settings.py
