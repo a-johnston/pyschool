@@ -29,10 +29,12 @@ $(document).ready(function () {
     regMode = !regMode;
 
     if (regMode) {
+      //$("#reg-container").show();
       $("#confirm-pass").show();
       $("#login-form p").html('Please register (or <a href="#" id="reg-button">log in</a>)');
       $("#reg-button").click(toggleReg);
     } else {
+      //$("#reg-container").hide();
       $("#confirm-pass").hide();
       $("#login-form p").html('Please log in (or <a href="#" id="reg-button">register</a>)');
       $("#reg-button").click(toggleReg);
