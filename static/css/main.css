@@ -13,7 +13,7 @@ a {
 
 a:hover {
     text-decoration: underline;
-    color: #EEE;
+    color: #EEE !important;
 }
 
 #title-container {
@@ -28,37 +28,72 @@ a:hover {
 #login-container {
     background: inherit;
     position: absolute;
+    color: #75715e;
     top: 3em;
     right: 1em;
     height: 0;
+    opacity: 0;
     z-index: 2;
     overflow: hidden;
-    transition: height .3s, box-shadow .7s;
+    transition: height .3s, opacity .3s;
 }
 
-#login-container p, #login-container div {
-    display:inline;
-    color: #75715e;
+#login-container * {
+    display: inline-block;
+    margin: .3em; 0;
+}
+
+#login-container p {
+    position: relative;
+    top: 0;
+    padding: .1em;
+    margin: .3em;
+    margin-left: .8em;
+    line-height: 1.5em;
+    transition: top .3s;
+}
+
+.login-alt-text {
+    top: -2.1em !important;
 }
 
 #login-container form {
     float: right;
-    padding: .4em .5em;
+    padding: 0;
+    margin-left: 0em;
+}
+
+#login-container form * {
+    float: left;
+    display: inline-block;
+    padding: .3em;
+    margin: .3em;
+}
+
+#login-container #reg-div {
+    padding: 0;
+    margin: 0;
+    width: 0;
+    height: 3em;
+    opacity: 0;
+    overflow: hidden;
+    transition: width .3s, opacity .3s;
+}
+
+.reg-div-big {
+    width: 10.6em !important;
+    opacity: 1 !important;
 }
 
 #login-container input {
-    padding: .3em;
-    margin: .3em 0;
     border-radius: .5em;
+    background: white;
 }
 
 .big-title {
     height: 2.8em !important;
+    opacity: 1 !important;
     box-shadow: 0 0 2em #111;
-}
-
-#login-container #confirm-pass {
-    display: none;
 }
 
 #menu-container {
@@ -113,7 +148,7 @@ a:hover {
     background: #111;
 
     transition: height .3s;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .text {

@@ -6,6 +6,7 @@
     <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
     <script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js"></script>
     <script src="{% static "lib/jquery.djangocsrf.js" %}" type="text/javascript"></script>
+    <script src="{% static "lib/jquery.cookie.js" %}" type="text/javascript"></script>
     <script src="{% static "lib/codemirror.js" %}" type="text/javascript"></script>
     <script src="{% static "lib/python.js" %}" type="text/javascript"></script>
     <script src="{% static "lib/skulpt.min.js" %}" type="text/javascript"></script>
@@ -22,6 +23,7 @@
             <a href="#" id="test" class="menu-option">Test Solution</a>
             <a href="#" id="get-challenge" class="menu-option">Get Challenge</a>
             {% else %}
+            <a href="#" id="register-button" class="menu-option">Register</a>
             <a href="#" id="login-button" class="menu-option">Login</a>
             {% endif %}
             <div class="spacer"></div>
@@ -29,11 +31,17 @@
             <a href="#" id="run-code" class="menu-option">Run Code</a>
         </div>
         <div id="login-container">
-            <form id="login-form">
-                <p>Please log in (or <a href="#" id="reg-button">register</a>)</p>
+            <p>
+                Please log in or <a href="#" class="reg-button">register</a><br>
+                Please register or <a href="#" class="reg-button">log in</a>
+            </p>
+            <form id="login-form" action="javascript:;" onsubmit="handleAccount(this)">
                 <input type="text" placeholder="username">
                 <input type="password" placeholder="password">
-                <input type="password" placeholder="confirm password" id="confirm-pass">
+                <div id="reg-div">
+                    <input type="password" placeholder="confirm password" id="confirm-pass">
+                </div>
+                <input type="submit">
             </form>
         </div>
     </div>
@@ -45,7 +53,7 @@
         <div id="input-toggle">|||||</div>
         <textarea id="cm-ta">print 'Hello world!'</textarea>
     </div>
-    <div id='footer'>Made with <a href="http://www.skulpt.org">Skulpt</a> and <a href="http://www.codemirror.net">CodeMirror</a>. Released under <a href=".">A License</a>. (c) 2015</div>
+    <div id='footer'>Made with <a href="http://www.skulpt.org">Skulpt</a> and <a href="http://www.codemirror.net">CodeMirror</a>. Released under the <a href="http://opensource.org/licenses/mit-license.php">MIT license</a>. (c) 2016 Adam Johnston</div>
     <script type="text/javascript">
         window.user = "{{ request.user }}";
     </script>

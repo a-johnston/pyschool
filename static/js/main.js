@@ -1,12 +1,18 @@
 var regMode = false;
 
+var cm = null;
+
 $(document).ready(function () {
   $.djangocsrf( "enable" );
 
   var output = $('#output-box');
 
   var outf = function (text) {
-    output.text(output.text() + text);
+    output.html(output.html() + text.replace("<", "&lt;").replace("&", "&amp;"));
+  };
+
+  var rawOutf = function (text) {
+    output.html(output.html() + text);
   };
 
   $("#clear-output").click(function () {
@@ -20,25 +26,35 @@ $(document).ready(function () {
   $("#input-toggle").click(togglePaneSize);
 
   $("#login-button").click(function () {
-    $("#login-container").toggleClass("big-title");
+    if (regMode) {
+        toggleReg();
+
+        if (!$("#login-container").hasClass("big-title")) {
+            $("#login-container").toggleClass("big-title");
+        }
+    } else {
+        $("#login-container").toggleClass("big-title");
+    }
   });
 
-  $("#reg-button").click(toggleReg);
+  $("#register-button").click(function () {
+    if (!regMode) {
+        toggleReg();
+
+        if (!$("#login-container").hasClass("big-title")) {
+            $("#login-container").toggleClass("big-title");
+        }
+    } else {
+        $("#login-container").toggleClass("big-title");
+    }
+  });
+
+  $(".reg-button").click(toggleReg);
 
   function toggleReg() {
     regMode = !regMode;
-
-    if (regMode) {
-      //$("#reg-container").show();
-      $("#confirm-pass").show();
-      $("#login-form p").html('Please register (or <a href="#" id="reg-button">log in</a>)');
-      $("#reg-button").click(toggleReg);
-    } else {
-      //$("#reg-container").hide();
-      $("#confirm-pass").hide();
-      $("#login-form p").html('Please log in (or <a href="#" id="reg-button">register</a>)');
-      $("#reg-button").click(toggleReg);
-    }
+    $("#reg-div").toggleClass("reg-div-big");
+    $("#login-container p").toggleClass("login-alt-text");
   }
 
   function builtinRead(x) {
@@ -73,7 +89,7 @@ $(document).ready(function () {
     "Shift-Tab"  : togglePaneSize
   };
 
-  var cm = CodeMirror.fromTextArea($("#cm-ta")[0], {
+  cm = CodeMirror.fromTextArea($("#cm-ta")[0], {
     mode: "python",
     theme: "monokai",
     lineNumbers: true,
@@ -82,4 +98,28 @@ $(document).ready(function () {
     extraKeys: keymap,
     parserConfig: {'pythonVersion': 2, 'strictErrors': true},
   });
+
+  cm.on("changes", function () {
+    $.cookie("code", cm.doc.getValue(), { path: '/', expires: 10 });
+  });
+
+  var oldCode = $.cookie("code");
+
+  if (oldCode) {
+    cm.doc.setValue(oldCode)
+  }
 });
+
+function handleAccount(form) {
+    values = {'username': form.elements[0].value,
+              'password': form.elements[1].value };
+    if (regMode) {
+        jQuery.post("/register/", values, accountCallback);
+    } else {
+        jQuery.post("/login/", values, accountCallback);
+    }
+}
+
+function accountCallback(obj, stat, x) {
+    window.location = "/";
+}
