@@ -9,7 +9,7 @@ class UserProgress(models.Model):
 
     level = models.IntegerField()
 
-    completed = models.CommaSeperatedIntegerField(max_length=10)
+    completed = models.TextField()
     
     def __unicode__(self):
         return str(user)
