@@ -6,7 +6,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'index.html', {'loggedIn': str(request.user) != 'AnonymousUser'})
+    return render(request, 'index.html',
+        {
+            'logged_in': str(request.user) != 'AnonymousUser',
+            'modules': ['Intro', 'Interesting stuff', 'Advanced']
+        })
 
 def logout(request):
     django_views.logout(request)

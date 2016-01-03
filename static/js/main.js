@@ -25,6 +25,10 @@ $(document).ready(function () {
 
   $("#input-toggle").click(togglePaneSize);
 
+  $("#ch-button").click(function () {
+    $("#challenges").toggleClass("open-challenges");
+  });
+
   $("#login-button").click(function () {
     if (regMode) {
         toggleReg();

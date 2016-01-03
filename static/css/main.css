@@ -49,7 +49,7 @@ a:hover {
     padding: .1em;
     margin: .3em;
     margin-left: .8em;
-    line-height: 1.5em;
+    line-height: 2em;
     transition: top .3s;
 }
 
@@ -96,6 +96,27 @@ a:hover {
     box-shadow: 0 0 2em #111;
 }
 
+#challenges {
+    background: inherit;
+    position: absolute;
+    top: 3em;
+    right: 7.2em;
+    height: 0em;
+    opacity: 0;
+    z-index: 2;
+    transition: all .3s;
+}
+
+#title-container .open-challenges {
+    height: 10em;
+    opacity: 1;
+}
+
+#challenges a {
+    display: block;
+    padding: .5em;
+}
+
 #menu-container {
     width: 100%;
     height: 1.8em;
@@ -135,9 +156,9 @@ a:hover {
     background: rgba(255, 255, 255, .1);
 }
 
-#menu-container .menu-option:hover {
+.menu-option:hover {
     color: #FFF;
-    background: rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, .2) !important;
 }
 
 #output-container {

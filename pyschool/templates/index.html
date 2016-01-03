@@ -3,8 +3,7 @@
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{% static "lib/codemirror.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/monokai.css" %}">
-    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
-    <script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js"></script>
+    <script src="{% static "lib/jquery-1.9.0.min.js" %}"></script>
     <script src="{% static "lib/jquery.djangocsrf.js" %}" type="text/javascript"></script>
     <script src="{% static "lib/jquery.cookie.js" %}" type="text/javascript"></script>
     <script src="{% static "lib/codemirror.js" %}" type="text/javascript"></script>
@@ -15,13 +14,11 @@
     <div id="title-container">
         <div id="menu-container">
             <div># PySchool</div>
-            {% if loggedIn %}
+            {% if logged_in %}
             <a href="logout" class="menu-option">Logout</a>
             <div class="menu-text">{{ request.user }}</div>
             <div class="spacer"></div>
-            <a href="#" id="submit" class="menu-option">Submit Solution</a>
-            <a href="#" id="test" class="menu-option">Test Solution</a>
-            <a href="#" id="get-challenge" class="menu-option">Get Challenge</a>
+            <a href="#" id="ch-button" class="menu-option">Challenges</a>
             {% else %}
             <a href="#" id="register-button" class="menu-option">Register</a>
             <a href="#" id="login-button" class="menu-option">Login</a>
@@ -32,8 +29,8 @@
         </div>
         <div id="login-container">
             <p>
-                Please log in or <a href="#" class="reg-button">register</a><br>
-                Please register or <a href="#" class="reg-button">log in</a>
+                log in<br>
+                register
             </p>
             <form id="login-form" action="javascript:;" onsubmit="handleAccount(this)">
                 <input type="text" placeholder="username">
@@ -44,6 +41,14 @@
                 <input type="submit">
             </form>
         </div>
+        {% if logged_in %}
+            <div id="challenges">
+                {% for module in modules %}
+                    <a href="#" class="menu-option" 
+                       style="background: {% cycle 'inherit' 'rgba(0, 0, 0, .3)' %}">{{ module }}</a>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
     <div id="output-grad"></div>
     <div id="output-container" class="text">
