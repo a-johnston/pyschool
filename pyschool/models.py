@@ -12,10 +12,4 @@ class UserProgress(models.Model):
     completed = models.TextField()
     
     def __unicode__(self):
-        return str(user)
-
-class ChallengeSet(models.Model):
-    name = models.CharField(max_length=30)
-
-    values = models.TextField()
-    pass
+        return str(self.user) + ' ' + str(self.level)

@@ -1,15 +1,31 @@
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-import django.contrib.auth.views as django_views
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+import django.contrib.auth.views as django_views
+
+from . import models as pyschool_models
+
+from . import challenges
 
 def index(request):
+    prog = None
+    try:
+        prog = pyschool_models.UserProgress.objects.get(user=request.user)
+    except:
+        if str(request.user) != 'AnonymousUser':
+            print 'new progress object'
+            prog = pyschool_models.UserProgress()
+            prog.user = request.user
+            prog.level = 1
+            prog.completed = ""
+            prog.save()
+
     return render(request, 'index.html',
         {
             'logged_in': str(request.user) != 'AnonymousUser',
-            'modules': ['Intro', 'Interesting stuff', 'Advanced']
+            'set': challenges.get_challenges(prog.level) if prog else None
         })
 
 def logout(request):
@@ -26,8 +42,8 @@ def login(request):
         if user and user.is_active:
             django_views.login(request)
             return HttpResponse()
-    except:
-        pass
+    except Exception as e:
+        print e
     return HttpResponse(status=403)
 
 def register(request):
@@ -35,6 +51,13 @@ def register(request):
         username = request.POST['username']
         password = request.POST['password']
         user = User.objects.create_user(username, password=password)
+
+        prog = pyschool_models.UserProgress()
+        prog.user = user
+        prog.level = 1
+        prog.completed = ""
+        prog.save()
+
         django_views.login(request)
     except:
         pass

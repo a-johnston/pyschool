@@ -1,5 +1,7 @@
 var regMode = false;
 
+var selectedChallenge = null;
+
 var cm = null;
 
 $(document).ready(function () {
@@ -124,6 +126,20 @@ function handleAccount(form) {
     }
 }
 
+function handleChallenge(x) {
+    console.log($("#cm-ta").text())
+}
+
 function accountCallback(obj, stat, x) {
     window.location = "/";
+}
+
+function selectChallenge(option, name, desc) {
+    $("#challenges a").removeClass("selected");
+    if (name != selectedChallenge) {
+        $(option).addClass("selected");
+        selectedChallenge = name;
+    } else {
+        selectedChallenge = null;
+    }
 }

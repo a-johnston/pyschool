@@ -27,6 +27,7 @@
             <a href="#" id="clear-output" class="menu-option">Clear Output</a>
             <a href="#" id="run-code" class="menu-option">Run Code</a>
         </div>
+        {% if not logged_in %}
         <div id="login-container">
             <p>
                 log in<br>
@@ -41,11 +42,14 @@
                 <input type="submit">
             </form>
         </div>
-        {% if logged_in %}
+        {% endif %}
+        {% if set %}
             <div id="challenges">
-                {% for module in modules %}
+                <p>{{ set.0 }}</p>
+                {% for module in set.1 %}
                     <a href="#" class="menu-option" 
-                       style="background: {% cycle 'inherit' 'rgba(0, 0, 0, .3)' %}">{{ module }}</a>
+                       style="background: {% cycle 'inherit' 'rgba(0, 0, 0, .3)' %}"
+                       onclick="selectChallenge(this, '{{ module.name }}', '{{ module.description }}')">{{ module }}</a>
                 {% endfor %}
             </div>
         {% endif %}
@@ -56,6 +60,9 @@
     </div>
     <div id="input-container" class="text text-mini">
         <div id="input-toggle">|||||</div>
+        <div id="challenge-detail">
+            <a href="#" id="challenge-submit">Submit</a>
+        </div>
         <textarea id="cm-ta">print 'Hello world!'</textarea>
     </div>
     <div id='footer'>Made with <a href="http://www.skulpt.org">Skulpt</a> and <a href="http://www.codemirror.net">CodeMirror</a>. Released under the <a href="http://opensource.org/licenses/mit-license.php">MIT license</a>. (c) 2016 Adam Johnston</div>
