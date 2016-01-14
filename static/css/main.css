@@ -100,7 +100,7 @@ a:hover {
     background: inherit;
     position: absolute;
     top: 3em;
-    right: 1.2em;
+    right: 1em;
     height: 0em;
     width: 17.3em;
     opacity: 0;
@@ -213,7 +213,7 @@ a:hover {
 #input-toggle {
     position:absolute;
     left: 1em;
-    top: -1.5em;
+    top: -1.7em;
     height: 1.5em;
     padding: .1em 1em;
     background: #272822;
@@ -224,12 +224,12 @@ a:hover {
 #challenge-detail {
     width: inherit%;
     height: 0;
-
-    transition: height .3s;
+    transition: all .3s;
 }
 
-#input-container .detail-expanded {
+#input-container .detail-view {
     height: 5em;
+    border-bottom: solid #1B1C18;
 }
 
 #input-toggle:hover {

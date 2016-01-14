@@ -33,6 +33,7 @@ def logout(request):
     return HttpResponseRedirect('/')
 
 def login(request):
+    print 'through'
     try:
         username = request.POST['username']
         password = request.POST['password']
@@ -40,6 +41,7 @@ def login(request):
         user = authenticate(username=username, password=password)
 
         if user and user.is_active:
+            print 'test'
             django_views.login(request)
             return HttpResponse()
     except Exception as e:

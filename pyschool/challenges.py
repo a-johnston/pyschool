@@ -1,3 +1,6 @@
+import random
+
+
 def sanitize(code):
     return code
 
@@ -28,7 +31,27 @@ class VariableChallenge(Challenge):
             return False
 
 
-intro_challenge_set = ('Intro', [VariableChallenge()])
+class MethodChallenge(Challenge):
+    name = 'Methods'
+
+    description = 'Make a method "add" that adds two inputs'
+
+    def test(self, method):
+        try:
+            exec method
+
+            a = random.randint(0, 1000)
+            b = random.randint(0, 1000)
+
+            if add(a, b) == (a + b):
+                return True
+
+            return False
+        except:
+            return False
+
+
+intro_challenge_set = ('Intro', [VariableChallenge(), MethodChallenge()])
 
 challenge_sets = [intro_challenge_set]
 

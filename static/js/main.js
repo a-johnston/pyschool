@@ -127,7 +127,7 @@ function handleAccount(form) {
 }
 
 function handleChallenge(x) {
-    console.log($("#cm-ta").text())
+    console.log(cm.getValue());
 }
 
 function accountCallback(obj, stat, x) {
@@ -138,8 +138,13 @@ function selectChallenge(option, name, desc) {
     $("#challenges a").removeClass("selected");
     if (name != selectedChallenge) {
         $(option).addClass("selected");
+        $("#challenge-detail").addClass("detail-view");
         selectedChallenge = name;
+
+        $("#challenges #ch-title").text(name);
+        $("#challenges #ch-desc").text(desc);
     } else {
         selectedChallenge = null;
+        $("#challenge-detail").removeClass("detail-view");
     }
 }
