@@ -127,11 +127,25 @@ function handleAccount(form) {
 }
 
 function handleChallenge(x) {
-    console.log(cm.getValue());
+    if (selectedChallenge == null) {
+        return;
+    }
+    values = {'name': selectedChallenge,
+              'code': cm.getValue() };
+
+    jQuery.post("/submit/", values, submitCallback);
 }
 
 function accountCallback(obj, stat, x) {
     window.location = "/";
+}
+
+function submitCallback(data) {
+    if (data == 'success') {
+        console.log('success!');
+    } else {
+        console.log('failure...');
+    }
 }
 
 function selectChallenge(option, name, desc) {
