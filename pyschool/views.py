@@ -65,5 +65,18 @@ def register(request):
         pass
     return HttpResponse()
 
-def get_challenge(request):
-    pass
+def submit_challenge(request):
+    if str(request.user) == 'AnonymousUser':
+        return HttpResponse('failed')
+    prog = None
+    try:
+        prog = pyschool_models.UserProgress.objects.get(user=request.user)
+    except:
+        return HttpResponse('failed')
+
+    chal = challenges.lookup_challenge(prog.level, request.POST['name'])
+
+    if chal.test(request.POST['code']):
+        return HttpResponse('success')
+    else:
+        return HttpResponse('failed')

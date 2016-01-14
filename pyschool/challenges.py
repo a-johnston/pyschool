@@ -57,3 +57,9 @@ challenge_sets = [intro_challenge_set]
 
 def get_challenges(level):
     return challenge_sets[level - 1]
+
+def lookup_challenge(level, name):
+    for chal in challenge_sets[level - 1][1]:
+        if name is chal.name:
+            return chal
+    return None
