@@ -1,19 +1,23 @@
 var regMode = false;
 
 var selectedChallenge = null;
+var completedCallback = null;
 
 var cm = null;
+
+var outf = null;
+var rawOutf = null;
 
 $(document).ready(function () {
   $.djangocsrf( "enable" );
 
   var output = $('#output-box');
 
-  var outf = function (text) {
+  outf = function (text) {
     output.html(output.html() + text.replace("<", "&lt;").replace("&", "&amp;"));
   };
 
-  var rawOutf = function (text) {
+  rawOutf = function (text) {
     output.html(output.html() + text);
   };
 
@@ -92,7 +96,8 @@ $(document).ready(function () {
 
   var keymap = {
     "Ctrl-Enter" : runCode,
-    "Shift-Tab"  : togglePaneSize
+    "Shift-Tab"  : togglePaneSize,
+    "Shift-Ctrl-Enter": handleChallenge
   };
 
   cm = CodeMirror.fromTextArea($("#cm-ta")[0], {
@@ -126,10 +131,15 @@ function handleAccount(form) {
     }
 }
 
-function handleChallenge(x) {
+function printcolor(text, color) {
+    rawOutf("<div style='color:" + color + "'>" + text + "</div>");
+}
+
+function handleChallenge() {
     if (selectedChallenge == null) {
         return;
     }
+    printcolor("Submitting code...", "#66d9ef"); 
     values = {'name': selectedChallenge,
               'code': cm.getValue() };
 
@@ -141,10 +151,20 @@ function accountCallback(obj, stat, x) {
 }
 
 function submitCallback(data) {
-    if (data == 'success') {
-        console.log('success!');
+    if (data == 'failed') {
+        printcolor("Challenge incomplete! :(", "red");
+    } else if (data == 'success') {
+        printcolor("Challenge completed!", "greenyellow");
+        if (completedCallback) {
+            completedCallback();
+        }
     } else {
-        console.log('failure...');
+        printcolor("Level completed!");
+        if (completedCallback) {
+            completedCallback();
+        }
+        
+        window.location = "/"; //jaaank
     }
 }
 
@@ -155,10 +175,15 @@ function selectChallenge(option, name, desc) {
         $("#challenge-detail").addClass("detail-view");
         selectedChallenge = name;
 
-        $("#challenges #ch-title").text(name);
-        $("#challenges #ch-desc").text(desc);
+        $("#challenge-detail #ch-title").text(name);
+        $("#challenge-detail #ch-desc").text(desc);
+
+        completedCallback = function () {
+            $(option).append("<p class='done'>Done!</p>");
+        };
     } else {
         selectedChallenge = null;
+        completedCallback = null;
         $("#challenge-detail").removeClass("detail-view");
     }
 }

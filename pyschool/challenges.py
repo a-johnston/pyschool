@@ -25,7 +25,7 @@ class VariableChallenge(Challenge):
     def test(self, method):
         try:
             exec method
-            x = 0
+            print x
             return True
         except:
             return False
@@ -55,11 +55,23 @@ intro_challenge_set = ('Intro', [VariableChallenge(), MethodChallenge()])
 
 challenge_sets = [intro_challenge_set]
 
+
 def get_challenges(level):
+    print level
+    if level > len(challenge_sets):
+        return ('No more!', [])
     return challenge_sets[level - 1]
+
 
 def lookup_challenge(level, name):
     for chal in challenge_sets[level - 1][1]:
-        if name is chal.name:
+        if name == chal.name:
             return chal
     return None
+
+
+def level_complete(level, completed):
+    for chal in challenge_sets[level - 1][1]:
+        if chal.name not in completed:
+            return False
+    return True

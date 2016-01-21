@@ -3,6 +3,7 @@
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{% static "lib/codemirror.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/monokai.css" %}">
+    <link rel="shortcut icon" type="image/png" href="{% static "media/favicon.ico" %}"/>
     <script src="{% static "lib/jquery-1.9.0.min.js" %}"></script>
     <script src="{% static "lib/jquery.djangocsrf.js" %}" type="text/javascript"></script>
     <script src="{% static "lib/jquery.cookie.js" %}" type="text/javascript"></script>
@@ -49,7 +50,12 @@
                 {% for module in set.1 %}
                     <a href="#" class="menu-option" 
                        style="background: {% cycle 'inherit' 'rgba(0, 0, 0, .3)' %}"
-                       onclick="selectChallenge(this, '{{ module.name }}', '{{ module.description }}')">{{ module }}</a>
+                       onclick="selectChallenge(this, '{{ module.0.name }}', '{{ module.0.description }}')">
+                        {{ module.0 }}
+                        {% if module.1 %}
+                            <p class="done">Done!</p>
+                        {% endif %}
+                    </a>
                 {% endfor %}
             </div>
         {% endif %}
@@ -63,7 +69,7 @@
         <div id="challenge-detail">
             <p id="ch-title"></p>
             <p id="ch-desc"></p>
-            <a href="#" id="challenge-submit">Submit</a>
+            <a href="#" id="challenge-submit" class="menu-option" onclick="handleChallenge()">Submit</a>
         </div>
         <textarea id="cm-ta">print 'Hello world!'</textarea>
     </div>

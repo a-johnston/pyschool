@@ -120,8 +120,15 @@ a:hover {
 }
 
 #challenges a {
-    display: block;
     padding: .5em;
+    display: block;
+}
+
+#challenges .done {
+    display: inline;
+    float: right;
+    padding: 0;
+    text-shadow: none;
 }
 
 #challenges .selected {
@@ -225,6 +232,20 @@ a:hover {
     width: inherit%;
     height: 0;
     transition: all .3s;
+    overflow: hidden;
+}
+
+#challenge-detail p {
+    margin: 0;
+    padding: .5em;
+}
+
+#challenge-submit {
+    position:absolute;
+    right: 1em;
+    top: 1em;
+    padding: .5em;
+    background: rgba(255, 255, 255, .1);
 }
 
 #input-container .detail-view {

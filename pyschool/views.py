@@ -1,4 +1,5 @@
 from django.contrib.auth import logout, login, authenticate
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
@@ -8,6 +9,7 @@ import django.contrib.auth.views as django_views
 from . import models as pyschool_models
 
 from . import challenges
+
 
 def index(request):
     prog = None
@@ -22,18 +24,28 @@ def index(request):
             prog.completed = ""
             prog.save()
 
+    challengeset = None
+    if prog:
+        complete = prog.completed.split('|')
+        print complete
+        rawset = challenges.get_challenges(prog.level)
+        challengeset = (
+            rawset[0],
+            map(lambda c: (c, c.name in complete), rawset[1]))
+
     return render(request, 'index.html',
-        {
-            'logged_in': str(request.user) != 'AnonymousUser',
-            'set': challenges.get_challenges(prog.level) if prog else None
-        })
+                  {
+                    'logged_in': str(request.user) != 'AnonymousUser',
+                    'set': challengeset
+                  })
+
 
 def logout(request):
     django_views.logout(request)
     return HttpResponseRedirect('/')
 
+
 def login(request):
-    print 'through'
     try:
         username = request.POST['username']
         password = request.POST['password']
@@ -41,12 +53,12 @@ def login(request):
         user = authenticate(username=username, password=password)
 
         if user and user.is_active:
-            print 'test'
             django_views.login(request)
             return HttpResponse()
     except Exception as e:
         print e
     return HttpResponse(status=403)
+
 
 def register(request):
     try:
@@ -65,18 +77,30 @@ def register(request):
         pass
     return HttpResponse()
 
+
 def submit_challenge(request):
-    if str(request.user) == 'AnonymousUser':
-        return HttpResponse('failed')
-    prog = None
     try:
-        prog = pyschool_models.UserProgress.objects.get(user=request.user)
-    except:
-        return HttpResponse('failed')
+        if str(request.user) == 'AnonymousUser':
+            return HttpResponse('failed')
+        prog = None
+        try:
+            prog = pyschool_models.UserProgress.objects.get(user=request.user)
+        except:
+            return HttpResponse('failed')
 
-    chal = challenges.lookup_challenge(prog.level, request.POST['name'])
+        chal = challenges.lookup_challenge(prog.level, request.POST['name'])
 
-    if chal.test(request.POST['code']):
-        return HttpResponse('success')
-    else:
-        return HttpResponse('failed')
+        if chal.test(request.POST['code']):
+            if chal.name not in prog.completed:
+                prog.completed += chal.name + '|'
+                if challenges.level_complete(prog.level, prog.completed):
+                    prog.level = prog.level + 1
+                    prog.save()
+                    return HttpResponse('success complete')
+                prog.save()
+            return HttpResponse('success')
+        else:
+            return HttpResponse('failed')
+    except Exception as e:
+        print e
+    return HttpResponse('failed')
