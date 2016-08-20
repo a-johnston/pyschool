@@ -17,7 +17,7 @@ def index(request):
         prog = pyschool_models.UserProgress.objects.get(user=request.user)
     except:
         if str(request.user) != 'AnonymousUser':
-            print 'new progress object'
+            print('new progress object')
             prog = pyschool_models.UserProgress()
             prog.user = request.user
             prog.level = 1
@@ -27,7 +27,7 @@ def index(request):
     challengeset = None
     if prog:
         complete = prog.completed.split('|')
-        print complete
+        print(complete)
         rawset = challenges.get_challenges(prog.level)
         challengeset = (
             rawset[0],
@@ -56,7 +56,7 @@ def login(request):
             django_views.login(request)
             return HttpResponse()
     except Exception as e:
-        print e
+        print(e)
     return HttpResponse(status=403)
 
 
@@ -102,5 +102,5 @@ def submit_challenge(request):
         else:
             return HttpResponse('failed')
     except Exception as e:
-        print e
+        print(e)
     return HttpResponse('failed')

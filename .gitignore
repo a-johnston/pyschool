@@ -1,5 +1,5 @@
 db.sqlite3
 *.swp
-_staticfiles/
+staticfiles/
 *.pyc
 pyschool/settings.py

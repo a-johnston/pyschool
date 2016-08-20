@@ -24,8 +24,8 @@ class VariableChallenge(Challenge):
 
     def test(self, method):
         try:
-            exec method
-            print x
+            exec(method)
+            print(x)
             return True
         except:
             return False
@@ -38,7 +38,7 @@ class MethodChallenge(Challenge):
 
     def test(self, method):
         try:
-            exec method
+            exec(method)
 
             a = random.randint(0, 1000)
             b = random.randint(0, 1000)
@@ -57,7 +57,7 @@ challenge_sets = [intro_challenge_set]
 
 
 def get_challenges(level):
-    print level
+    print(level)
     if level > len(challenge_sets):
         return ('No more!', [])
     return challenge_sets[level - 1]
