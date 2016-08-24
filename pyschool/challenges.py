@@ -24,9 +24,9 @@ class VariableChallenge(Challenge):
 
     def test(self, method):
         try:
-            exec(method)
-            print(x)
-            return True
+            glob = {}
+            exec(method, glob)
+            return 'x' in glob
         except:
             return False
 
@@ -38,12 +38,13 @@ class MethodChallenge(Challenge):
 
     def test(self, method):
         try:
-            exec(method)
+            glob = {}
+            exec(method, glob)
 
             a = random.randint(0, 1000)
             b = random.randint(0, 1000)
 
-            if add(a, b) == (a + b):
+            if glob['add'](a, b) == (a + b):
                 return True
 
             return False

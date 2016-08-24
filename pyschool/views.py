@@ -5,12 +5,14 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 import django.contrib.auth.views as django_views
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from . import models as pyschool_models
 
 from . import challenges
 
 
+@ensure_csrf_cookie
 def index(request):
     prog = None
     try:
@@ -55,8 +57,8 @@ def login(request):
         if user and user.is_active:
             django_views.login(request)
             return HttpResponse()
-    except Exception as e:
-        print(e)
+    except:
+        pass
     return HttpResponse(status=403)
 
 

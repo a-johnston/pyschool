@@ -43,6 +43,22 @@ a:hover {
     margin: .3em; 0;
 }
 
+#login-container #login-form input {
+    border: none;
+    padding: .5em;
+}
+
+#login-container #login-form input[type="submit"] {
+    padding: .4em .5em;
+    border-bottom: 3px solid #777;
+}
+
+#login-container #login-form input[type="submit"]:hover {
+    background-color: #EAEAEA;
+    border-bottom: 1px solid #777 !important;
+    margin-top: .4em !important;
+}
+
 #login-container p {
     position: relative;
     top: 0;
@@ -81,7 +97,7 @@ a:hover {
 }
 
 .reg-div-big {
-    width: 10.6em !important;
+    width: 12.4em !important;
     opacity: 1 !important;
 }
 
